@@ -283,6 +283,9 @@ int main(int argc, char* argv[])
 	pthread_t tid;
 	pthread_create(&tid, NULL, &threadproc, NULL);
 	
+	if(argc > 1){
+		cdet[1][0] = argv[1];
+	}
 	gtk_init(&argc, &argv);
 	GtkWidget *hbox, *button, *vbox, *spacer,
 			  *menu_bar, *menu_item, *file_menu, *help_menu, 
