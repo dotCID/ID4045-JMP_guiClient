@@ -120,7 +120,7 @@ int TCPMessage(const char* message)
          return -5;
     }
     
-    if(strcmp(message, commArdS[4][0])==0 || strcmp(message, commS[0][0])==0 || strcmp(message, commS[1][0])==0)
+    if(strcmp(message, commArdS[4][0])==0 || strcmp(message, commSer[0][0])==0 || strcmp(message, commSer[1][0])==0)
     	memcpy(&posReturn, &buffer, sizeof(buffer));
     
     
