@@ -137,19 +137,7 @@ static void setting_responseBtn(GtkWidget *button, gpointer data)
 		if(strcmp(label, cdet[i][1]) ==0){
 			cdet[i][0] = gtk_entry_get_text(GTK_ENTRY(data));
 			g_print("%s%s%s%s\n", "Set ", cdet[i][0], " as ", cdet[i][1]);
-<<<<<<< HEAD
 		}
-	}
-	
-	/*if(strcmp(label, cdet[2][0]) == 0){
-		stopped = true;
-		gtk_label_set_text(GTK_LABEL(label), cdet[2][1]);
-	}else */if(strcmp(label, cdet[2][1]) == 0){
-		stopped = false;
-		//gtk_label_set_text(GTK_LABEL(label), cdet[2][0]);
-=======
-		}		
->>>>>>> parent of 7fc051b... Delayed start of asking for position
 	}
 	//g_print("%s\n", "Setting response completed");
 }
@@ -277,7 +265,7 @@ void check_position(){
 	// return format: aExt(##.##) aRot(##.##) hPos(##.##) vPos(##.##)
 	g_print("%s\n", "asking for position");
 
-	TCPMessage(commArdS[4][0]); //TODO: get the returned data out somehow
+	TCPMessage(commArdS[4][0]);
 }
 
 void *threadproc(void *arg)
