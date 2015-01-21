@@ -22,13 +22,10 @@
 
 GtkWidget *cdetIn[3], *window, *progressbar; // holds connection details
 bool done = false;
-bool stopped = true; // do not ask for position if this is true
-
 char posReturn[256];
 
 const char* cdet[3][2] = {{"145.94.58.85", "Server address"},
-						  {"4547", "Server port"},
-						  {"Stop connection", "Start connection"}};
+						  {"4547", "Server port"}};
 
 		  
 const char* commArd[cAno][2] = {{"blink\n", "Blink LED 13"},
@@ -140,6 +137,7 @@ static void setting_responseBtn(GtkWidget *button, gpointer data)
 		if(strcmp(label, cdet[i][1]) ==0){
 			cdet[i][0] = gtk_entry_get_text(GTK_ENTRY(data));
 			g_print("%s%s%s%s\n", "Set ", cdet[i][0], " as ", cdet[i][1]);
+<<<<<<< HEAD
 		}
 	}
 	
@@ -149,6 +147,9 @@ static void setting_responseBtn(GtkWidget *button, gpointer data)
 	}else */if(strcmp(label, cdet[2][1]) == 0){
 		stopped = false;
 		//gtk_label_set_text(GTK_LABEL(label), cdet[2][0]);
+=======
+		}		
+>>>>>>> parent of 7fc051b... Delayed start of asking for position
 	}
 	//g_print("%s\n", "Setting response completed");
 }
@@ -276,12 +277,12 @@ void check_position(){
 	// return format: aExt(##.##) aRot(##.##) hPos(##.##) vPos(##.##)
 	g_print("%s\n", "asking for position");
 
-	TCPMessage(commArdS[4][0]);
+	TCPMessage(commArdS[4][0]); //TODO: get the returned data out somehow
 }
 
 void *threadproc(void *arg)
 {
-    while(!done && !stopped)
+    while(!done)
     {
         sleep(1);
         check_position();
@@ -313,7 +314,7 @@ int main(int argc, char* argv[])
 	gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook),GTK_POS_TOP);
 	
 /* Settings page */
-	for(int i=0;i<3;i++){
+	for(int i=0;i<2;i++){
 		hbox = gtk_hbox_new(false, false);
 		spacer = gtk_label_new("");
 		gtk_widget_set_size_request(spacer, 10, 10);
@@ -321,16 +322,13 @@ int main(int argc, char* argv[])
 		
 		button = gtk_button_new_with_label(cdet[i][1]);
 		gtk_widget_set_size_request(button, 140, 20);
-		if(i<2){
-			cdetIn[i] = gtk_entry_new();
-			gtk_entry_set_text(GTK_ENTRY(cdetIn[i]), cdet[i][0]);
+		cdetIn[i] = gtk_entry_new();
+		gtk_entry_set_text(GTK_ENTRY(cdetIn[i]), cdet[i][0]);
 		
 		gtk_box_pack_start(GTK_BOX(hbox), cdetIn[i], false, false, 0);
-		g_signal_connect(cdetIn[i], "activate", G_CALLBACK(setting_responseEnt), button);
-		};
-		
 		gtk_box_pack_start(GTK_BOX(hbox), button, false, false, 0);
 		g_signal_connect(button, "clicked", G_CALLBACK(setting_responseBtn), cdetIn[i]);
+		g_signal_connect(cdetIn[i], "activate", G_CALLBACK(setting_responseEnt), button);
 		gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 		
 	}
