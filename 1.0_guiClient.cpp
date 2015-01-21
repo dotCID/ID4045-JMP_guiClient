@@ -146,7 +146,7 @@ static void setting_responseBtn(GtkWidget *button, gpointer data)
 	if(strcmp(label, cdet[2][0]) == 0){
 		stopped = true;
 		gtk_label_set_text(GTK_LABEL(label), cdet[2][1]);
-	}else if(strcmp(labl, cdet[2][1] == 0){
+	}else if(strcmp(label, cdet[2][1]) == 0){
 		stopped = false;
 		gtk_label_set_text(GTK_LABEL(label), cdet[2][0]);
 	}
