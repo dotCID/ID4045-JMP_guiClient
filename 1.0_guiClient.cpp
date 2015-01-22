@@ -199,7 +199,7 @@ static GtkWidget* make_sliderBox(char* title, char* unit, int def, int min, int 
 	
 	hbox = gtk_hbox_new(false, 0);
 	spacer = gtk_label_new("");
-	progressbar = gtk_progress_bar_new();
+	//progressbar = gtk_progress_bar_new();
 	
 	gtk_widget_set_size_request(spacer, 10, 10);
 	gtk_box_pack_start(GTK_BOX(hbox), spacer, false, false , 0);
@@ -244,7 +244,7 @@ static GtkWidget* make_sliderBox(char* title, char* unit, int def, int min, int 
 	hbox = gtk_hbox_new(false, 0);
 	spacer = gtk_label_new("");
 	gtk_widget_set_size_request(spacer, 10, 10);
-	gtk_widget_set_size_request(progressbar, 250,15);
+	//gtk_widget_set_size_request(progressbar, 250,15);
 	double start;
 	if(min<0){
 		start = min*-1;
@@ -253,9 +253,9 @@ static GtkWidget* make_sliderBox(char* title, char* unit, int def, int min, int 
 		start = def;
 	}
 	
-	gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progressbar), start);
+	//gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progressbar), start);
 	gtk_box_pack_start(GTK_BOX(hbox), spacer, false, false , 0);
-	gtk_box_pack_start(GTK_BOX(hbox), progressbar, false, false, 0);
+	//gtk_box_pack_start(GTK_BOX(hbox), progressbar, false, false, 0);
 	
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	return vbox;
@@ -280,8 +280,9 @@ void *threadproc(void *arg)
 
 int main(int argc, char* argv[])
 {
-	pthread_t tid;
-	pthread_create(&tid, NULL, &threadproc, NULL);
+	// Progress check removed because it causes fork() failure in the server after ~5min
+	//pthread_t tid;
+	//pthread_create(&tid, NULL, &threadproc, NULL);
 	
 	if(argc > 1){
 		cdet[1][0] = argv[1];
