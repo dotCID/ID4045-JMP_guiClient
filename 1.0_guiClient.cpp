@@ -272,8 +272,8 @@ void *threadproc(void *arg)
 {
     while(!done)
     {
-        sleep(1);
-        check_position();
+      //  sleep(1);
+      //  check_position();
     }
     return 0;
 }
