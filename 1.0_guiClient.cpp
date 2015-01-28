@@ -15,6 +15,7 @@
 #include <netdb.h>
 #include <math.h>
 #include <unistd.h>
+#include <clocale>
 
 #define cAno 6
 #define cASno 5	
@@ -348,6 +349,8 @@ int main(int argc, char* argv[])
 	// Progress check removed because it causes fork() failure in the server after ~5min
 	//pthread_t tid;
 	//pthread_create(&tid, NULL, &threadproc, NULL);
+	
+	setLocale(LC_ALL, ""); // this sets the locale to system default, should prevent the ,/. bug with the Arduino
 	
 	if(argc > 1){
 		cdet[1][0] = argv[1];
