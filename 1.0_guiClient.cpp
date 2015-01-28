@@ -222,6 +222,8 @@ static void slider_response(GtkWidget *widget, gpointer data){
 				value = value * 10;
 			}
 			char message[256];
+			setlocale(LC_NUMERIC, "C"); // if the locale is set here it does work for sprintf, in main() it doesn't
+
 			sprintf(message, "%s%s%f\n", commArdS[i][0], " ", value);
 			
 			g_print("%s\n",message);
@@ -349,9 +351,7 @@ int main(int argc, char* argv[])
 	// Progress check removed because it causes fork() failure in the server after ~5min
 	//pthread_t tid;
 	//pthread_create(&tid, NULL, &threadproc, NULL);
-	
-	setLocale(LC_ALL, ""); // this sets the locale to system default, should prevent the ,/. bug with the Arduino
-	
+
 	if(argc > 1){
 		cdet[1][0] = argv[1];
 	}
