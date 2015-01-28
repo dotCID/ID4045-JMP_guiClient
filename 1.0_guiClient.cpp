@@ -217,8 +217,7 @@ static void slider_response(GtkWidget *widget, gpointer data){
 		if(strcmp(label, commArdS[i][1]) ==0){
 			if(strcmp(commArdS[i][0], "aRot")==0){ // slider works in degrees, Arduino operates on Radians
 				value = value / (180/M_PI);
-			}
-			if(strcmp(commArdS[i][0], "aExt")==0){ // slider works in cm, Arduino in mm
+			}else if((strcmp(commArdS[i][0], "aExt")==0) || strcmp(commArdS[i][0], "vPos")==0) || strcmp(commArdS[i][0], "hPos")==0)){ // slider works in cm, Arduino in mm
 				value = value * 10;
 			}
 			char message[256];
@@ -498,7 +497,7 @@ int main(int argc, char* argv[])
 	
 	gtk_container_add(GTK_CONTAINER(window),notebook);
 	gtk_widget_set_size_request(window, 500, 500);
-	gtk_window_set_title(GTK_WINDOW(window), "JMP Client software, v1.0.1");
+	gtk_window_set_title(GTK_WINDOW(window), "JMP Client software, v1.0.2");
 	gtk_widget_show_all(window);
 	gtk_main();
 	return 0;
