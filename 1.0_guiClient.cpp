@@ -217,7 +217,7 @@ static void slider_response(GtkWidget *widget, gpointer data){
 		if(strcmp(label, commArdS[i][1]) ==0){
 			if(strcmp(commArdS[i][0], "aRot")==0){ // slider works in degrees, Arduino operates on Radians
 				value = value / (180/M_PI);
-			}else if((strcmp(commArdS[i][0], "aExt")==0) || strcmp(commArdS[i][0], "vPos")==0) || strcmp(commArdS[i][0], "hPos")==0)){ // slider works in cm, Arduino in mm
+			}else if((strcmp(commArdS[i][0], "aExt")==0) || (strcmp(commArdS[i][0], "vPos")==0) || (strcmp(commArdS[i][0], "hPos")==0)){ // slider works in cm, Arduino in mm
 				value = value * 10;
 			}
 			char message[256];
