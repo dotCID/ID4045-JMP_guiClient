@@ -16,7 +16,7 @@
 #include <math.h>
 #include <unistd.h>
 
-#define cAno 5	
+#define cAno 6
 #define cASno 5	
 #define cSno 2
 
@@ -32,7 +32,8 @@ const char* commArd[cAno][2] = {{"blink\n", "Blink LED 13"},
 								{"on\n", "Turn on LED 13"},
 								{"off\n", "Turn off LED 13"},
 								{"extend\n", "Extend the arm"},
-								{"retract\n", "Retract the arm"}};
+								{"retract\n", "Retract the arm"}
+								{"home\n", "Retract and home"}};
 		 
 const char* commArdS[cASno][2] ={{"aExt", "Arm extension"},
 							 	 {"aRot", "Arm rotation"},
@@ -216,6 +217,9 @@ static void slider_response(GtkWidget *widget, gpointer data){
 		if(strcmp(label, commArdS[i][1]) ==0){
 			if(strcmp(commArdS[i][0], "aRot")==0){ // slider works in degrees, Arduino operates on Radians
 				value = value / (180/M_PI);
+			}
+			if(strcmp(commArdS[i][0], "aExt")==0){ // slider works in cm, Arduino in mm
+				value = value * 10;
 			}
 			char message[256];
 			sprintf(message, "%s%s%f\n", commArdS[i][0], " ", value);
