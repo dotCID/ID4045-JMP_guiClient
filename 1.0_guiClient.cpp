@@ -211,9 +211,12 @@ static void slider_response(GtkWidget *widget, gpointer data){
 	int multiplier = value>0?1:-1;
 	
 	value = (round(value * 100 *multiplier) / 100) * multiplier;
-				  
+	
 	for(int i=0;i<cASno;i++){
 		if(strcmp(label, commArdS[i][1]) ==0){
+			if(strcmp(commArdS[i][1], "aRot")==0){ // slider works in degrees, Arduino operates on Radians
+				value = value * (180/M_PI);
+			}
 			char message[256];
 			sprintf(message, "%s%s%f\n", commArdS[i][0], " ", value);
 			
