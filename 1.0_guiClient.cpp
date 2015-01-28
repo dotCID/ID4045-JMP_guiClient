@@ -32,7 +32,7 @@ const char* commArd[cAno][2] = {{"blink\n", "Blink LED 13"},
 								{"on\n", "Turn on LED 13"},
 								{"off\n", "Turn off LED 13"},
 								{"extend\n", "Extend the arm"},
-								{"retract\n", "Retract the arm"}
+								{"retract\n", "Retract the arm"},
 								{"home\n", "Retract and home"}};
 		 
 const char* commArdS[cASno][2] ={{"aExt", "Arm extension"},
