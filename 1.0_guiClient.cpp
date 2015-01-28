@@ -43,7 +43,12 @@ const char* commArdS[cASno][2] ={{"aExt", "Arm extension"},
 const char* commSer[cSno][2] = {{"echo\n", "Echo this message"},
 							 	{"aAddr\n", "Get Arduino address"}};	
 
-	
+
+/*
+	Provides a dialog with information about errors that have occurred during runtime
+	@return void
+	@param *msg the error message as provided by the system
+*/								
 void error(const char *msg)
 {
     perror(msg);
@@ -72,6 +77,11 @@ void error(const char *msg)
     //exit(0);
 }
 
+/*
+	Initialises a TCP connection to the server and port set in the "settings" tab or from default values
+	@return int A status code for debugging
+	@param message The message to be sent to the server
+*/
 int TCPMessage(const char* message)
 {
     int sockfd, portno, n;
@@ -129,7 +139,12 @@ int TCPMessage(const char* message)
     return 0;
 }				 
 
-
+/*
+	Callback function for when a settings button has been pressed
+	@return void
+	@param button The widget from which the callback originated
+	@param data a pointer to the entry field that belongs to the button
+*/
 static void setting_responseBtn(GtkWidget *button, gpointer data)
 {
 	const char *label = gtk_button_get_label(GTK_BUTTON(button));
@@ -142,6 +157,12 @@ static void setting_responseBtn(GtkWidget *button, gpointer data)
 	//g_print("%s\n", "Setting response completed");
 }
 
+/*
+	Callback function for when a settings field was activated by pressing "Enter"
+	@return void
+	@param entry The entry field widget from which the callback originated
+	@param data The button associated with the entry field
+*/
 static void setting_responseEnt(GtkWidget *entry, gpointer data){ // a bit hairy but oh well
 	const char *label = gtk_button_get_label(GTK_BUTTON(data));
 	for(int i=0;i<2;i++){
@@ -152,6 +173,12 @@ static void setting_responseEnt(GtkWidget *entry, gpointer data){ // a bit hairy
 	}
 }
 
+/*
+	Callback function for responding to the test command buttons on the Command tab
+	@return void
+	@param button The button from which the callback originated
+	@param data A null pointer (unused by this function but required by definition)
+*/
 static void command_response(GtkWidget *button, gpointer data){
 	const char *label = gtk_button_get_label(GTK_BUTTON(button));
 	for(int i=0;i<cAno;i++){
@@ -166,6 +193,12 @@ static void command_response(GtkWidget *button, gpointer data){
 	//g_print("%s\n", "Command response completed");
 }
 
+/*
+	Callback function for responding to the arm position sliders or spin buttons on the Sliders tab
+	@return void
+	@param widget The widget from which the callback originated
+	@param data The label associated with the slider
+*/
 static void slider_response(GtkWidget *widget, gpointer data){
 	const char *label = gtk_label_get_text(GTK_LABEL(data));
 	g_print("%s%s%s%f\n", 	"Slider ", 
@@ -191,6 +224,17 @@ static void slider_response(GtkWidget *widget, gpointer data){
 	}
 }
 
+/*
+	A function to create the sliders on the Slider tab. 
+	This resulted in so much duplicate code that a function written for it made more sense.
+	Can also create progress bars with the sliders, but this was disabled due to a server problem.
+	@return GtkWidget The constructed widget that houses the new slider and spinbutton combination
+	@param title The title of the slider
+	@param unit The SI unit that is to be displayed next to the slider
+	@param def The default value of the slider
+	@param min The minimum value of the slider
+	@param max The maximum value of the slider
+*/
 static GtkWidget* make_sliderBox(char* title, char* unit, int def, int min, int max){
 	GtkWidget *hbox, *spacer, *vbox, *label, *spin, *scale;
 	GtkObject *adjustment;
@@ -261,6 +305,10 @@ static GtkWidget* make_sliderBox(char* title, char* unit, int def, int min, int 
 	return vbox;
 }
 
+/*
+	This function can be called to ask the server for the current position of the arm
+	@return void	
+*/
 void check_position(){
 	// return format: aExt(##.##) aRot(##.##) hPos(##.##) vPos(##.##)
 	g_print("%s\n", "asking for position");
@@ -268,6 +316,11 @@ void check_position(){
 	TCPMessage(commArdS[4][0]);
 }
 
+/*
+	A function to that calls check_position every 1 second
+	@return void
+	@param arg I don't know what a void parameter is but it seems needed for the function
+*/
 void *threadproc(void *arg)
 {
     while(!done)
@@ -278,6 +331,12 @@ void *threadproc(void *arg)
     return 0;
 }
 
+/*
+	The main program, that creates the GUI.
+	@return int A status message
+	@param argc The amount of commandline arguments
+	@param argv[] The commandline arguments. Passing these is optional, but the first argument is assumed to be the server address.
+*/
 int main(int argc, char* argv[])
 {
 	// Progress check removed because it causes fork() failure in the server after ~5min
