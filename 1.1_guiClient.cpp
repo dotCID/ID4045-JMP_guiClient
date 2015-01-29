@@ -479,7 +479,7 @@ int main(int argc, char* argv[])
 
 	// Extension
 	
-	tempbox = make_sliderBox((char *)commArdS[0][1], (char *)"cm", 0, 0, 80);
+	tempbox = make_sliderBox((char *)commArdS[0][1], (char *)"cm", 0, 0, 60);
 	gtk_box_pack_start(GTK_BOX(vbox), tempbox, false, false, 0);
 
 	// Rotation
@@ -496,11 +496,11 @@ int main(int argc, char* argv[])
 	
 	// horizontal position
 	
-	tempbox = make_sliderBox((char *)commArdS[2][1], (char *)"cm", 0, 0, 100); // TODO find out max of this
+	tempbox = make_sliderBox((char *)commArdS[2][1], (char *)"cm", 60, 60, 120); // TODO find out max of this
 	gtk_box_pack_start(GTK_BOX(vbox), tempbox, false, false, 0); 
 	
 	// vertical position
-	tempbox = make_sliderBox((char *)commArdS[3][1], (char *)"cm", 0, 0, 100); // TODO find out max of this
+	tempbox = make_sliderBox((char *)commArdS[3][1], (char *)"cm", 66, 66, 188); // TODO find out max of this
 	gtk_box_pack_start(GTK_BOX(vbox), tempbox, false, false, 0); 
 	
 	label = gtk_label_new("Sliders");
